@@ -1,0 +1,6 @@
+محتويات فولدر الموقع:
+- index.html
+- README.txt
+
+ارفع index.html مباشرة داخل Root في GitHub Repository.
+يجب أن يكون اسم الصفحة الرئيسية بالضبط: index.html
