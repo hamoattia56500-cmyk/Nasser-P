@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" class="splash-active">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -158,7 +158,7 @@
   .hero::before{
     content:"";
     position:absolute;
-    inset:0;
+    top:0; right:0; bottom:0; left:0;
     background-image:
       radial-gradient(circle at 78% 18%, rgba(111,225,240,0.16), transparent 40%),
       radial-gradient(circle at 90% 70%, rgba(201,122,68,0.10), transparent 45%);
@@ -177,6 +177,8 @@
     position:relative;
     z-index:2;
   }
+  .hero-grid > *{ min-width:0; }
+  .hero h1{ overflow-wrap:break-word; word-break:break-word; }
   .eyebrow{
     display:inline-flex;
     align-items:center;
@@ -243,7 +245,7 @@
   .gauge-wrap svg{width:100%; height:100%; display:block;}
   .gauge-photo{
     position:absolute;
-    inset:19%;
+    top:19%; right:19%; bottom:19%; left:19%;
     border-radius:50%;
     overflow:hidden;
     border:3px solid var(--navy-950);
@@ -259,7 +261,7 @@
   /* ===== Frost ambience (background cooling effect) ===== */
   .frost-layer{
     position:absolute;
-    inset:0;
+    top:0; right:0; bottom:0; left:0;
     overflow:hidden;
     pointer-events:none;
     z-index:1;
@@ -320,6 +322,7 @@
     grid-template-columns:repeat(3, 1fr);
     gap:24px;
   }
+  .services-grid > *{ min-width:0; }
   .service-card{
     background:#fff;
     border:1px solid var(--paper-100);
@@ -366,6 +369,7 @@
     position:relative;
     z-index:2;
   }
+  .about-grid > *{ min-width:0; }
   .about-photo{
     aspect-ratio:4/5;
     border-radius:22px;
@@ -395,6 +399,7 @@
     grid-template-columns:repeat(4, 1fr);
     gap:18px;
   }
+  .gallery-grid > *{ min-width:0; }
   .gallery-grid a.placeholder{
     aspect-ratio:1/1;
     border-radius:14px;
@@ -472,6 +477,7 @@
     grid-template-columns:1fr 1fr;
     gap:40px;
   }
+  .contact-grid > *{ min-width:0; }
   .contact-card{
     background:var(--navy-950);
     border-radius:24px;
@@ -587,10 +593,114 @@
     .hero-stats div{padding-left:0; margin-left:0; border-left:none; padding-right:0;}
     .contact-card, .hours-card{padding:28px;}
   }
+
+  /* ===== Splash / intro screen ===== */
+  #splash{
+    position:fixed; top:0; right:0; bottom:0; left:0; z-index:9999;
+    width:100%; height:100%;
+    background:radial-gradient(circle at 50% 30%, var(--navy-800), var(--navy-950) 70%);
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    padding:20px; box-sizing:border-box;
+    overflow:hidden;
+  }
+  #splash .splash-inner{ color:var(--paper-50); }
+  #splash .brand{
+    font-family:'Cairo', sans-serif; font-weight:800;
+    font-size:1.6rem; letter-spacing:1px; color:var(--ice-300);
+    margin-bottom:6px; opacity:0; animation:splashFade 1s ease forwards .2s;
+  }
+  #splash .brand span{ color:var(--copper-400); }
+  #splash .tagline{
+    font-size:.95rem; color:var(--steel-300); margin-bottom:40px;
+    opacity:0; animation:splashFade 1s ease forwards .5s;
+  }
+  #splash .ac-scene{ position:relative; width:260px; height:220px; margin:0 auto 30px; }
+  #splash .ac-unit{
+    position:absolute; top:0; left:50%; transform:translateX(-50%);
+    width:200px; height:70px; border-radius:10px; z-index:3;
+    background:linear-gradient(180deg, var(--paper-50), var(--paper-100));
+    box-shadow:0 6px 20px rgba(0,0,0,.35);
+  }
+  #splash .ac-unit::before{
+    content:""; position:absolute; top:12px; left:14px; right:14px; height:6px;
+    background:repeating-linear-gradient(90deg, var(--ice-300) 0 4px, transparent 4px 10px);
+    border-radius:3px;
+  }
+  #splash .ac-unit .vents{ position:absolute; bottom:8px; left:20px; right:20px; height:20px; display:flex; gap:6px; }
+  #splash .ac-unit .vents span{ flex:1; background:var(--ice-200); border-radius:2px; animation:splashFlap 1.4s ease-in-out infinite; }
+  #splash .ac-unit .vents span:nth-child(2){ animation-delay:.2s; }
+  #splash .ac-unit .vents span:nth-child(3){ animation-delay:.4s; }
+  #splash .ac-unit .vents span:nth-child(4){ animation-delay:.6s; }
+  #splash .ac-unit .led{
+    position:absolute; top:8px; right:16px; width:8px; height:8px; border-radius:50%;
+    background:var(--copper-400); box-shadow:0 0 8px var(--copper-400);
+    animation:splashBlink 1.6s ease-in-out infinite;
+  }
+  #splash .air-wave{
+    position:absolute; top:66px; left:50%; width:6px; height:6px;
+    border:2px solid var(--ice-400); border-top:none; border-radius:0 0 50px 50px;
+    opacity:0; animation:splashAir 2.2s ease-out infinite;
+  }
+  #splash .air-wave.w1{ left:30%; animation-delay:0s; }
+  #splash .air-wave.w2{ left:50%; margin-left:-3px; animation-delay:.5s; }
+  #splash .air-wave.w3{ left:70%; animation-delay:1s; }
+  #splash .snow{ position:absolute; top:70px; color:var(--ice-200); font-size:14px; opacity:0; animation:splashFall 3s linear infinite; }
+  @keyframes splashFlap{ 0%,100%{transform:scaleY(1);} 50%{transform:scaleY(.4);} }
+  @keyframes splashBlink{ 0%,100%{opacity:1;} 50%{opacity:.3;} }
+  @keyframes splashAir{
+    0%{ width:6px; height:6px; opacity:.9; transform:translateX(-50%) translateY(0); }
+    100%{ width:90px; height:90px; opacity:0; transform:translateX(-50%) translateY(30px); }
+  }
+  @keyframes splashFall{
+    0%{ opacity:0; transform:translateY(0) translateX(0) rotate(0deg); }
+    10%{ opacity:.9; }
+    100%{ opacity:0; transform:translateY(140px) translateX(10px) rotate(180deg); }
+  }
+  @keyframes splashFade{ to{ opacity:1; } }
+  #splash .enter-btn{
+    opacity:0; animation:splashFade 1s ease forwards 2.4s;
+    background:linear-gradient(135deg, var(--ice-400), var(--navy-700));
+    color:var(--navy-950); font-family:'Cairo', sans-serif; font-weight:700;
+    border:none; padding:12px 38px; font-size:1rem; border-radius:30px; cursor:pointer;
+    box-shadow:0 0 20px rgba(111,225,240,.45);
+    transition:transform .2s ease, box-shadow .2s ease;
+  }
+  #splash .enter-btn:hover{ transform:translateY(-2px); box-shadow:0 0 28px rgba(111,225,240,.7); }
+  #splash .enter-btn:active{ transform:translateY(0); }
+  #splash.hide{ animation:splashOut .5s ease forwards; pointer-events:none; }
+  @keyframes splashOut{ to{ opacity:0; visibility:hidden; } }
+  #site-content{ display:none; }
+  html.splash-active, html.splash-active body{ overflow:hidden; height:100%; }
+  @media (prefers-reduced-motion: reduce){
+    #splash *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; }
+  }
 </style>
 </head>
 <body>
 
+<div id="splash">
+  <div class="splash-inner">
+    <div class="brand">ناصر <span>للتكييف</span></div>
+    <div class="tagline">راحتك تبدأ من هنا</div>
+    <div class="ac-scene">
+      <div class="ac-unit">
+        <span class="led"></span>
+        <div class="vents"><span></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="air-wave w1"></div>
+      <div class="air-wave w2"></div>
+      <div class="air-wave w3"></div>
+      <div class="snow" style="left:35%; animation-delay:.3s;">&#10052;</div>
+      <div class="snow" style="left:50%; animation-delay:1s;">&#10052;</div>
+      <div class="snow" style="left:65%; animation-delay:1.7s;">&#10052;</div>
+    </div>
+    <button class="enter-btn" id="enterSiteBtn">دخول الموقع</button>
+    <noscript><style>#splash{display:none;} #site-content{display:block !important;} html.splash-active{overflow:visible !important; height:auto !important;}</style></noscript>
+  </div>
+</div>
+
+<div id="site-content">
 <header>
   <div class="header-row">
     <div class="brand">
@@ -912,6 +1022,19 @@
     </div>
   </div>
 </footer>
+
+</div>
+
+<script>
+  document.getElementById('enterSiteBtn').addEventListener('click', function () {
+    var splash = document.getElementById('splash');
+    var site = document.getElementById('site-content');
+    site.style.display = 'block';
+    document.documentElement.classList.remove('splash-active');
+    splash.classList.add('hide');
+    setTimeout(function(){ splash.style.display = 'none'; }, 550);
+  });
+</script>
 
 </body>
 </html>
